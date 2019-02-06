@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+zmq = "*"
+python-bitcoinrpc = "*"
+blockchain-parser = {git = "https://github.com/arshbot/python-altcoin-blockchain-parser"}
+bitcoinlib = "*"
+ptpython = "*"
+python-bitcoinlib = "*"
+ptpdb = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
