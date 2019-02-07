@@ -1,5 +1,8 @@
 from blockchain_parser.utils import decode_varint
 from bitcoinlib.transactions import Transaction
+from hashlib import sha256
+
+from ptpdb import set_trace
 
 DASHBOARD_BLOCK_COUNTER = 0
 DASHBOARD_TX_COUNTER = 0 
@@ -10,6 +13,7 @@ def process_rawtx(raw):
 
 def process_rawblock(raw):
     global DASHBOARD_BLOCK_COUNTER, DASHBOARD_TX_COUNTER, DASHBOARD_FAILED_COUNTER
+    set_trace()
     DASHBOARD_BLOCK_COUNTER += 1
     block_header = raw[:80]
     block = raw[80:]
@@ -27,9 +31,13 @@ def process_rawblock(raw):
     # the varint (1 to 9 bytes)
     n_transactions, offset = decode_varint(transaction_data)
 
-    
+    txs = []
+
     for i in range(n_transactions):
-        transaction = Transaction.import_raw(transaction_data[offset:])
+        raw = transaction_data[offset:]
+        transaction = Transaction.import_raw(raw)
+        tx_id = calculate_id(raw)
+        txs.append(tx_id)
         offset += transaction.size
 
     # for rawtx in get_block_transactions(raw):
