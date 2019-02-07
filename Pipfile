@@ -6,11 +6,11 @@ name = "pypi"
 [packages]
 zmq = "*"
 python-bitcoinrpc = "*"
-blockchain-parser = {git = "https://github.com/arshbot/python-altcoin-blockchain-parser"}
 bitcoinlib = "*"
 ptpython = "*"
 python-bitcoinlib = "*"
 ptpdb = "*"
+blockchain-parser = "*"
 
 [dev-packages]
 

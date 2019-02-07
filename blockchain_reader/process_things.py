@@ -1,5 +1,6 @@
 from blockchain_parser.utils import decode_varint
-from bitcoinlib.transactions import Transaction
+from blockchain_parser.block import get_block_transactions
+# from bitcoinlib.transactions import Transaction
 from hashlib import sha256
 
 from ptpdb import set_trace
@@ -13,10 +14,8 @@ def process_rawtx(raw):
 
 def process_rawblock(raw):
     global DASHBOARD_BLOCK_COUNTER, DASHBOARD_TX_COUNTER, DASHBOARD_FAILED_COUNTER
-    set_trace()
     DASHBOARD_BLOCK_COUNTER += 1
     block_header = raw[:80]
-    block = raw[80:]
     version = block_header[:4]
     prev_merkle_root = block_header[4:36]
     merkle_root = block_header[36:68]
@@ -25,27 +24,26 @@ def process_rawblock(raw):
 
     tx_count = 0 
 
-    transaction_data = raw_hex[80:]
+    # transaction_data = raw[80:]
 
-    # Decoding the number of transactions, offset is the size of
-    # the varint (1 to 9 bytes)
-    n_transactions, offset = decode_varint(transaction_data)
+    # # Decoding the number of transactions, offset is the size of
+    # # the varint (1 to 9 bytes)
+    # n_transactions, offset = decode_varint(transaction_data)
 
-    txs = []
+    # txs = []
 
-    for i in range(n_transactions):
-        raw = transaction_data[offset:]
-        transaction = Transaction.import_raw(raw)
-        tx_id = calculate_id(raw)
-        txs.append(tx_id)
-        offset += transaction.size
+    # for i in range(n_transactions):
+    #     raw = transaction_data[offset:]
+    #     transaction = Transaction.import_raw(raw)
+    #     tx_id = calculate_id(raw)
+    #     txs.append(tx_id)
+    #     offset += transaction.size
 
-    # for rawtx in get_block_transactions(raw):
-    #     tx_count += 1
-    #     print(rawtx)
-
+    for tx in get_block_transactions(raw):
+        set_trace()
+        tx_count += 1
     
-    log_block(blockhash, txs, tx_count, DASHBOARD_BLOCK_COUNTER, DASHBOARD_TX_COUNTER, DASHBOARD_FAILED_COUNTER)
+    log_block(blockhash, tx_count, DASHBOARD_BLOCK_COUNTER, DASHBOARD_TX_COUNTER, DASHBOARD_FAILED_COUNTER)
     return
 
 def calculate_id(raw):

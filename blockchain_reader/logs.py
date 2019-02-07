@@ -11,11 +11,8 @@ def log_block(blockhash, our_txs, tx_count, DASHBOARD_BLOCK_COUNTER, DASHBOARD_T
     print("|                 |" + " Block hash: " + str(blockhash.hex()))
     print("|                 |" + " Total Txs: " + str(tx_count))
     print("|                 |")
-    print("|                 |" + " Our Transactions:")
-    for rawtx in our_txs:
-        print("|                 | " + str(rawtx.id))
-
-    print("|                 |" + " Total: " + str(len(our_txs)))
+    print("|                 |")
+    print("|                 |")
     print("+--------+--------+")
 
     # Prints dashboard
